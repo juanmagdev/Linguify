@@ -1,6 +1,7 @@
 
 import { useState } from 'react'
 import './App.css'
+import { getRelatedWords } from './helpers/getRelatedWords';
 
 function App() {
  
@@ -12,17 +13,15 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`https://api.datamuse.com/words?rel_trg=${topic}`);
-    const data = await response.json();
-    // const len = 30;
-    const relatedWordsArr = data.slice(0, size).map((item) => item.word);
+    var relatedWordsArr = await getRelatedWords(topic, size);
+    // console.log(relatedWordsArr);
     setRelatedWords(relatedWordsArr);
     
-    console.log(size);
-    console.log(language);
-    console.log(data);
-    console.log(topic);
-    console.log(relatedWords);
+  //   console.log(size);
+  //   console.log(language);
+  //   // console.log(data);
+  //   console.log(topic);
+  //   console.log(relatedWords);
   };
 
   return (

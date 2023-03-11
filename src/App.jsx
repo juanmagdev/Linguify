@@ -4,24 +4,17 @@ import './App.css'
 import { getRelatedWords } from './helpers/getRelatedWords';
 
 function App() {
- 
+
   const [topic, setTopic] = useState('');
   const [relatedWords, setRelatedWords] = useState([]);
   const [language, setLanguage] = useState('sp');
   const [size, setSize] = useState(20);
-  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     var relatedWordsArr = await getRelatedWords(topic, size);
-    // console.log(relatedWordsArr);
     setRelatedWords(relatedWordsArr);
-    
-  //   console.log(size);
-  //   console.log(language);
-  //   // console.log(data);
-  //   console.log(topic);
-  //   console.log(relatedWords);
   };
 
   return (
@@ -30,11 +23,11 @@ function App() {
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="text">Topic: </label>
-        <input 
-          id="topic" 
-          type="text" 
+        <input
+          id="topic"
+          type="text"
           value={topic}
-          onChange={(event) => setTopic(event.target.value)} 
+          onChange={(event) => setTopic(event.target.value)}
         />
 
         <input
@@ -45,9 +38,9 @@ function App() {
           onChange={(event) => setSize(event.target.value)}
         />
 
-        <select 
+        <select
           id='language'
-          onClick={(event) => setLanguage(event.target.value)}  
+          onClick={(event) => setLanguage(event.target.value)}
         >
           <option value='en'>English</option>
           <option value='sp'>Spanish</option>
@@ -57,13 +50,24 @@ function App() {
         <button>Generate</button>
       </form>
 
-      {relatedWords.length > 0 && (
-        <ol>
-          {relatedWords.map((relatedWord) => (
-            <li key={relatedWord}>{relatedWord}</li>
-          ))}
-        </ol>
-      )}
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <ol style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', columns: '2' }}>
+            {relatedWords.slice(0, Math.ceil(relatedWords.length / 2)).map((relatedWord, index) => (
+              <li key={relatedWord}>{relatedWord}</li>
+            ))}
+          </ol>
+        </div>
+        <div style={{ flex: 1 }}>
+          <ol start={size/2 + 1} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', columns: '2' }}>
+            {relatedWords.slice(15).map((relatedWord, index) => (
+              <li key={relatedWord}>{relatedWord}</li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+
     </>
 
 
